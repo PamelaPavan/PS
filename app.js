@@ -11,12 +11,17 @@ const dotenv = require('dotenv');
 //Adiciona bootstrap
 app.use('/bootstrap', express.static('./node_modules/bootstrap/dist'));
 
+//Adiciona css
+app.use('/css', express.static('./css'));
+
 //Configuração do express-handlebars
 app.engine('handlebars', engine());
 app.set('view engine', 'handlebars');
 app.set('views', './views');
 
-
+//Manipulação de dados via rotas
+app.use(express.json());
+app.use(express.urlencoded({extended:false}));
 
 // Carrega as variáveis de ambiente do arquivo .env
 dotenv.config();
@@ -46,7 +51,11 @@ app.get('/', function(req, res){ //requisição(req) resposta(res)
     res.render('formulario'); //renderiza arquivo handlebars com a estrutura html
 });
 
-
+//Rota para listar tarefas
+app.post('/listar', function(req, res){
+    console.log(req.body);
+    res.end();
+});
 
 //servidor
 app.listen(8080);
