@@ -15,3 +15,5 @@ npm i express-handlebars
 npm install mysql dotenv
 
 npm i bootstrap
+
+pip install mysql-connector-python
