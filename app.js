@@ -51,18 +51,17 @@ app.get('/', function(req, res){ //requisição(req) resposta(res)
     res.render('formulario'); //renderiza arquivo handlebars com a estrutura html
 });
 
-//Rota para listar tarefas
+// Rota para listar tarefas
 app.post('/listar', function(req, res){
     let nome = req.body.nome;
     let custo = req.body.custo;
     let data_limite = req.body.data_limite ? `'${req.body.data_limite}'` : 'NULL';
-    let ordem_apresentacao = req.body.ordem_apresentacao;
-
-    //SQL
-    let sql = `INSERT INTO tarefas (nome, custo, data_limite, ordem_apresentacao) VALUES ('${nome}', ${custo}, ${data_limite}, ${ordem_apresentacao})`;
+    
+    // SQL com parêntese de fechamento corrigido
+    let sql = `INSERT INTO tarefas (nome, custo, data_limite) VALUES ('${nome}', ${custo}, ${data_limite})`;
 
     connection.query(sql, function(erro, retorno){
-        if(erro) throw erro;
+        if (erro) throw erro;
         console.log(retorno);
     });
     res.redirect('/');
