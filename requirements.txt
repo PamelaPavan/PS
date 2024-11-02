@@ -1,0 +1,15 @@
+# Comandos
+
+npm init
+
+npm install express
+
+npm install -g nodemon
+
+nodemon app.js 
+
+npm i mysql2 
+
+npm i express-handlebars
+
+npm install mysql dotenv
