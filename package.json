@@ -1,0 +1,28 @@
+{
+  "name": "ps",
+  "version": "1.0.0",
+  "description": "Projeto Node.js e MySql para criacao de sistema de listas de tarefas",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PamelaPavan/PS_Sistema_de_Lista_de_Tarefas.git"
+  },
+  "keywords": [
+    "express",
+    "mysql",
+    "tarefas"
+  ],
+  "author": "Pamela Aliny Cleto Pavan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PamelaPavan/PS_Sistema_de_Lista_de_Tarefas/issues"
+  },
+  "homepage": "https://github.com/PamelaPavan/PS_Sistema_de_Lista_de_Tarefas#readme",
+  "dependencies": {
+    "express": "^4.21.1",
+    "nodemon": "^3.1.7"
+  }
+}
