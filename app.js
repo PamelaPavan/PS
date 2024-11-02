@@ -8,6 +8,8 @@ const app = express();
 
 const dotenv = require('dotenv');
 
+//Adiciona bootstrap
+app.use('/bootstrap', express.static('./node_modules/bootstrap/dist'));
 
 //Configuração do express-handlebars
 app.engine('handlebars', engine());

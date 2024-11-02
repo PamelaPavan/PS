@@ -13,3 +13,5 @@ npm i mysql2
 npm i express-handlebars
 
 npm install mysql dotenv
+
+npm i bootstrap
