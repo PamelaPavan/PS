@@ -53,8 +53,19 @@ app.get('/', function(req, res){ //requisição(req) resposta(res)
 
 //Rota para listar tarefas
 app.post('/listar', function(req, res){
-    console.log(req.body);
-    res.end();
+    let nome = req.body.nome;
+    let custo = req.body.custo;
+    let data_limite = req.body.data_limite ? `'${req.body.data_limite}'` : 'NULL';
+    let ordem_apresentacao = req.body.ordem_apresentacao;
+
+    //SQL
+    let sql = `INSERT INTO tarefas (nome, custo, data_limite, ordem_apresentacao) VALUES ('${nome}', ${custo}, ${data_limite}, ${ordem_apresentacao})`;
+
+    connection.query(sql, function(erro, retorno){
+        if(erro) throw erro;
+        console.log(retorno);
+    });
+    res.redirect('/');
 });
 
 //servidor
