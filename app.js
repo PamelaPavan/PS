@@ -110,14 +110,19 @@ app.get('/formularioEditar/:id', function(req, res){
 //Rota para remover tarefas
 app.get('/remover/:id', function(req, res){
     
-    let sql = `DELETE FROM tarefas WHERE id = ${req.params.id}`;
+    // Tratamento de exceção
+    try{
+        let sql = `DELETE FROM tarefas WHERE id = ${req.params.id}`;
 
-    connection.query(sql, function(erro, retorno){
+        connection.query(sql, function(erro, retorno){
         //Caso falhe
         if(erro) throw erro;
 
     });
-    res.redirect('/');
+    res.redirect('/okRemover');
+    }catch(erro){
+        res.redirect('/falhaRemover');
+    }
 });
 
 
