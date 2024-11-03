@@ -57,20 +57,39 @@ app.get('/', function(req, res){ //requisição(req) resposta(res)
     
 });
 
+//Rota principal contendo a situação
+app.get('/:situacao', function(req, res){ 
+    
+    let sql = 'SELECT * FROM tarefas';
+
+    connection.query(sql, function(erro, retorno){
+        res.render('formulario', {tarefas:retorno, situacao:req.params.situacao}); 
+    });
+    
+});
+
 // Rota para listar tarefas
 app.post('/listar', function(req, res){
-    let nome = req.body.nome;
+    try{
+        let nome = req.body.nome;
     let custo = req.body.custo;
     let data_limite = req.body.data_limite ? `'${req.body.data_limite}'` : 'NULL';
     
-    
-    let sql = `INSERT INTO tarefas (nome, custo, data_limite) VALUES ('${nome}', ${custo}, ${data_limite})`;
+    // Validar o nome da tarefa e o valor
+    if(nome == '' || custo == '' || isNaN(custo)){
+        res.redirect('/falhaListar');
+    }else{
+        let sql = `INSERT INTO tarefas (nome, custo, data_limite) VALUES ('${nome}', ${custo}, ${data_limite})`;
 
-    connection.query(sql, function(erro, retorno){
-        if (erro) throw erro;
-        console.log(retorno);
+        connection.query(sql, function(erro, retorno){
+            if (erro) throw erro;
+            console.log(retorno);
     });
-    res.redirect('/');
+        res.redirect('/okListar');
+    }    
+    }catch(erro){
+        res.redirect('/falhaListar');
+    }
 });
 
 //Rota para redirecionar para o formulário de edição
