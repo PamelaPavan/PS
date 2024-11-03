@@ -28,11 +28,11 @@ dotenv.config();
 
 // Cria a conexão com o banco de dados
 const connection = mysql.createConnection({
-    host: process.env.HOST,
-    user: process.env.USER,
-    password: process.env.PASSWORD,
-    port: process.env.PORT,
-    database: process.env.DATABASE
+    host: process.env.host,
+    user: process.env.user,
+    password: process.env.password,
+    port: process.env.port,
+    database: process.env.database
 });
 
 // Conecta ao banco de dados
@@ -48,7 +48,13 @@ module.exports = connection;
 
 //Rota principal
 app.get('/', function(req, res){ //requisição(req) resposta(res)
-    res.render('formulario'); //renderiza arquivo handlebars com a estrutura html
+    
+    let sql = 'SELECT * FROM tarefas';
+
+    connection.query(sql, function(erro, retorno){
+        res.render('formulario', {tarefas:retorno}); //renderiza arquivo handlebars com a estrutura html
+    });
+    
 });
 
 // Rota para listar tarefas
