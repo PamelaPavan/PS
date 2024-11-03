@@ -11,6 +11,8 @@ const dotenv = require('dotenv');
 //Adiciona bootstrap
 app.use('/bootstrap', express.static('./node_modules/bootstrap/dist'));
 
+app.use('/scripts', express.static('./scripts'));
+
 //Adiciona css
 app.use('/css', express.static('./css'));
 
