@@ -1,19 +1,6 @@
-# Comandos
-
-npm init
-
-npm install express
-
-npm install -g nodemon
-
-nodemon app.js 
-
-npm i mysql2 
-
-npm i express-handlebars
-
-npm install mysql dotenv
-
-npm i bootstrap
-
-pip install mysql-connector-python
+express
+nodemon
+mysql2
+express-handlebars
+dotenv
+bootstrap

@@ -73,5 +73,11 @@ app.post('/listar', function(req, res){
     res.redirect('/');
 });
 
+//Rota para remover tarefas
+app.get('/remover/:id', function(req, res){
+    console.log(req.params.id);
+    res.end();
+});
+
 //servidor
 app.listen(8080);
