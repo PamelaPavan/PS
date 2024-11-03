@@ -10,6 +10,7 @@ form input{
 .card{
     margin-top: 40px;
     padding: 5px;
+    display: block;
 }
 
 .textos{
