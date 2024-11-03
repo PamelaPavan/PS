@@ -75,8 +75,15 @@ app.post('/listar', function(req, res){
 
 //Rota para remover tarefas
 app.get('/remover/:id', function(req, res){
-    console.log(req.params.id);
-    res.end();
+    
+    let sql = `DELETE FROM tarefas WHERE id = ${req.params.id}`;
+
+    connection.query(sql, function(erro, retorno){
+        //Caso falhe
+        if(erro) throw erro;
+
+    });
+    res.redirect('/');
 });
 
 //servidor
