@@ -129,19 +129,19 @@ app.post('/editar', function(req, res) {
     let custo = req.body.custo;
     let data_limite = req.body.data_limite ? `'${req.body.data_limite}'` : 'NULL';
 
-    console.log(id);
-    console.log(nome);
-    console.log(custo);
-    console.log(data_limite);
+    //Validar nome e valor da tarefa
+    if(nome=='' || custo == '' || isNaN(custo)){
+        res.redirect('/falhaEdicao');
+    }else{
+        // Atualizar a tarefa no banco de dados
+        let sql = `UPDATE tarefas SET nome = '${nome}', custo = ${custo}, data_limite = ${data_limite} WHERE id = ${id}`;
 
-    // Atualizar a tarefa no banco de dados
-    let sql = `UPDATE tarefas SET nome = '${nome}', custo = ${custo}, data_limite = ${data_limite} WHERE id = ${id}`;
+        connection.query(sql, function(erro, retorno) {
+            if (erro) throw erro;
+        });
 
-    connection.query(sql, function(erro, retorno) {
-        if (erro) throw erro;
-
-        res.redirect('/');
-    });
+        res.redirect('/okEdicao');
+    }   
 
 });
 
