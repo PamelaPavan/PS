@@ -1,29 +1,24 @@
 const express = require('express');
-
 const { engine } = require('express-handlebars');
-
 const mysql = require('mysql2');
-
 const app = express();
-
 const dotenv = require('dotenv');
 
-//Adiciona bootstrap
+// Adiciona bootstrap
 app.use('/bootstrap', express.static('./node_modules/bootstrap/dist'));
-
 app.use('/scripts', express.static('./scripts'));
 
-//Adiciona css
+// Adiciona css
 app.use('/css', express.static('./css'));
 
-//Configuração do express-handlebars
+// Configuração do express-handlebars
 app.engine('handlebars', engine());
 app.set('view engine', 'handlebars');
 app.set('views', './views');
 
-//Manipulação de dados via rotas
+// Manipulação de dados via rotas
 app.use(express.json());
-app.use(express.urlencoded({extended:false}));
+app.use(express.urlencoded({ extended: false }));
 
 // Carrega as variáveis de ambiente do arquivo .env
 dotenv.config();
@@ -48,7 +43,6 @@ connection.connect((err) => {
 
 module.exports = connection;
 
-
 const Handlebars = require('handlebars');
 
 // Adicionar helper personalizado
@@ -56,57 +50,46 @@ Handlebars.registerHelper('gte', function(a, b) {
     return a >= b;
 });
 
-
-//Rota principal
-app.get('/', function(req, res){ //requisição(req) resposta(res)
-    
-    let sql = 'SELECT * FROM tarefas';
-
-    connection.query(sql, function(erro, retorno){
-        res.render('formulario', {tarefas:retorno}); //renderiza arquivo handlebars com a estrutura html
+// Rota principal
+app.get('/', function(req, res) {
+    let sql = 'SELECT * FROM tarefas ORDER BY ordem_apresentacao ASC';
+    connection.query(sql, function(erro, retorno) {
+        if (erro) throw erro;
+        res.render('formulario', { tarefas: retorno });
     });
-    
 });
 
-//Rota principal contendo a situação
-app.get('/:situacao', function(req, res){ 
-    
-    let sql = 'SELECT * FROM tarefas';
-
-    connection.query(sql, function(erro, retorno){
-        res.render('formulario', {tarefas:retorno, situacao:req.params.situacao}); 
+// Rota principal contendo a situação
+app.get('/:situacao', function(req, res) {
+    let sql = 'SELECT * FROM tarefas ORDER BY ordem_apresentacao ASC';
+    connection.query(sql, function(erro, retorno) {
+        if (erro) throw erro;
+        res.render('formulario', { tarefas: retorno, situacao: req.params.situacao });
     });
-    
 });
 
-app.post('/incluir', function(req, res){
+// Rota para incluir tarefas
+app.post('/incluir', function(req, res) {
     try {
-        let nome = req.body.nome;
-        let custo = req.body.custo;
-        let data_limite = req.body.data_limite ? `'${req.body.data_limite}'` : 'NULL';
+        let { nome, custo, data_limite } = req.body;
+        data_limite = data_limite || null;
 
-        // Validar o nome da tarefa e o valor
-        if (nome == '' || custo == '' || isNaN(custo)) {
-            res.redirect('/falhaIncluir');
+        if (nome === '' || custo === '' || isNaN(custo)) {
+            return res.redirect('/falhaIncluir');
         } else {
-            // Verificar se o nome da tarefa já existe
-            let sqlVerificar = `SELECT * FROM tarefas WHERE nome = '${nome}'`;
-            connection.query(sqlVerificar, function(erro, resultado) {
+            let sqlVerificar = 'SELECT * FROM tarefas WHERE nome = ?';
+            connection.query(sqlVerificar, [nome], function(erro, resultado) {
                 if (erro) throw erro;
 
                 if (resultado.length > 0) {
-                    // Nome da tarefa já existe; buscar lista de tarefas para manter a exibição
-                    connection.query('SELECT * FROM tarefas', function(erro, tarefas) {
+                    connection.query('SELECT * FROM tarefas ORDER BY ordem_apresentacao ASC', function(erro, tarefas) {
                         if (erro) throw erro;
-                        // Renderiza a página com a lista de tarefas e a mensagem de erro
                         return res.render('formulario', { erro: 'O nome da tarefa já existe.', tarefas: tarefas });
                     });
                 } else {
-                    // Inserir nova tarefa
-                    let sqlInserir = `INSERT INTO tarefas (nome, custo, data_limite) VALUES ('${nome}', ${custo}, ${data_limite})`;
-                    connection.query(sqlInserir, function(erro, retorno) {
+                    let sqlInserir = 'INSERT INTO tarefas (nome, custo, data_limite) VALUES (?, ?, ?)';
+                    connection.query(sqlInserir, [nome, custo, data_limite], function(erro, retorno) {
                         if (erro) throw erro;
-                        console.log(retorno);
                         res.redirect('/okIncluir');
                     });
                 }
@@ -117,66 +100,45 @@ app.post('/incluir', function(req, res){
     }
 });
 
-
-
-//Rota para redirecionar para o formulário de edição
-app.get('/formularioEditar/:id', function(req, res){
-
-    let sql = `SELECT * FROM tarefas WHERE id = ${req.params.id}`;
-
-    connection.query(sql, function(erro, retorno){
+// Rota para redirecionar para o formulário de edição
+app.get('/formularioEditar/:id', function(req, res) {
+    let sql = 'SELECT * FROM tarefas WHERE id = ?';
+    connection.query(sql, [req.params.id], function(erro, retorno) {
         if (erro) throw erro;
-
-        res.render('formularioEditar', {tarefa:retorno[0]});
-
+        res.render('formularioEditar', { tarefa: retorno[0] });
     });
-
 });
 
-
-//Rota para remover tarefas
-app.get('/remover/:id', function(req, res){
-    
-    // Tratamento de exceção
-    try{
-        let sql = `DELETE FROM tarefas WHERE id = ${req.params.id}`;
-
-        connection.query(sql, function(erro, retorno){
-        //Caso falhe
-        if(erro) throw erro;
-
-    });
-    res.redirect('/');
-    }catch(erro){
+// Rota para remover tarefas
+app.get('/remover/:id', function(req, res) {
+    try {
+        let sql = 'DELETE FROM tarefas WHERE id = ?';
+        connection.query(sql, [req.params.id], function(erro) {
+            if (erro) throw erro;
+            res.redirect('/');
+        });
+    } catch (erro) {
         res.redirect('/');
     }
 });
 
-
+// Rota para editar tarefas
 app.post('/editar', function(req, res) {
-    // Obter os dados do formulário
-    let id = req.body.id;
-    let nome = req.body.nome;
-    let custo = req.body.custo;
-    let data_limite = req.body.data_limite ? `'${req.body.data_limite}'` : 'NULL';
+    let { id, nome, custo, data_limite } = req.body;
+    data_limite = data_limite || null;
 
-    // Validar nome e valor da tarefa
     if (nome === '' || custo === '' || isNaN(custo)) {
         return res.redirect('/');
     }
 
-    // Verificar se o nome já existe
-    const sqlVerificaNome = `SELECT COUNT(*) AS total FROM tarefas WHERE nome = ? AND id <> ?`;
+    let sqlVerificaNome = 'SELECT COUNT(*) AS total FROM tarefas WHERE nome = ? AND id <> ?';
     connection.query(sqlVerificaNome, [nome, id], function(erro, resultado) {
         if (erro) throw erro;
 
-        else if (resultado[0].total > 0) {
-            
-            return res.render('formularioEditar', {erro: 'O nome da tarefa já existe.'});
-                
-        } else{
-            // Atualizar a tarefa no banco de dados
-            let sqlAtualiza = `UPDATE tarefas SET nome = ?, custo = ?, data_limite = ? WHERE id = ?`;
+        if (resultado[0].total > 0) {
+            return res.render('formularioEditar', { erro: 'O nome da tarefa já existe.' });
+        } else {
+            let sqlAtualiza = 'UPDATE tarefas SET nome = ?, custo = ?, data_limite = ? WHERE id = ?';
             connection.query(sqlAtualiza, [nome, custo, data_limite, id], function(erro) {
                 if (erro) throw erro;
                 res.redirect('/');
@@ -185,7 +147,22 @@ app.post('/editar', function(req, res) {
     });
 });
 
+// Rota para reordenar tarefas
+app.post('/reordenar', function(req, res) {
+    const novaOrdem = req.body.ordem;
 
+    novaOrdem.forEach((id, index) => {
+        let sql = 'UPDATE tarefas SET ordem_apresentacao = ? WHERE id = ?';
+        connection.query(sql, [index + 1, id], function(erro) {
+            if (erro) {
+                console.error('Erro ao atualizar a ordem da tarefa:', erro);
+                return res.status(500).json({ error: 'Erro ao atualizar a ordem das tarefas' });
+            }
+        });
+    });
 
-//servidor
+    res.status(200).json({ message: 'Ordem das tarefas atualizada com sucesso' });
+});
+
+// Servidor
 app.listen(8080);
