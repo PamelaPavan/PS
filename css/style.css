@@ -7,16 +7,20 @@ form input{
     margin-bottom: 10px;
 }
 
-.card{
-    margin-top: 40px;
-    padding: 5px;
-    display: block;
+.card {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.highlight {
+    background-color: yellow;
 }
 
 .textos{
-    display: flex;
-    justify-content: space-around;
-    margin-top: 30px;
+    margin:10px;
+    flex: 1;
 }
 
 form input[type="submit"]{
@@ -25,4 +29,14 @@ form input[type="submit"]{
 
 .card a{
     margin-top: 5px;
+}
+
+.btn-container {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+}
+
+.btn{
+    margin-bottom: 5px;
 }

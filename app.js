@@ -46,6 +46,15 @@ connection.connect((err) => {
 
 module.exports = connection;
 
+
+const Handlebars = require('handlebars');
+
+// Adicionar helper personalizado
+Handlebars.registerHelper('gte', function(a, b) {
+    return a >= b;
+});
+
+
 //Rota principal
 app.get('/', function(req, res){ //requisição(req) resposta(res)
     
@@ -68,8 +77,8 @@ app.get('/:situacao', function(req, res){
     
 });
 
-// Rota para listar tarefas
-app.post('/listar', function(req, res){
+// Rota para Incluir tarefas
+app.post('/incluir', function(req, res){
     try{
         let nome = req.body.nome;
     let custo = req.body.custo;
@@ -77,7 +86,7 @@ app.post('/listar', function(req, res){
     
     // Validar o nome da tarefa e o valor
     if(nome == '' || custo == '' || isNaN(custo)){
-        res.redirect('/falhaListar');
+        res.redirect('/falhaIncluir');
     }else{
         let sql = `INSERT INTO tarefas (nome, custo, data_limite) VALUES ('${nome}', ${custo}, ${data_limite})`;
 
@@ -85,10 +94,10 @@ app.post('/listar', function(req, res){
             if (erro) throw erro;
             console.log(retorno);
     });
-        res.redirect('/okListar');
+        res.redirect('/okIncluir');
     }    
     }catch(erro){
-        res.redirect('/falhaListar');
+        res.redirect('/falhaIncluir');
     }
 });
 

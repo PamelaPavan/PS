@@ -3,11 +3,11 @@
     <div class="container">
         <div class="row">
             <div class="col-6 offset-4">
-                <form action="/listar" method="post">
+                <form action="/incluir" method="post">
                     <input type="text"   name="nome" class="form-control" placeholder="Nome da Tarefa">
                     <input type="number" name="custo" class="form-control" placeholder="Custo da Tarefa">
                     <input type="date"   name="data_limite" class="form-control" aria-label="Data Limite da Tarefa">
-                    <input type="submit" class="btn btn-primary" value="Listar">
+                    <input type="submit" class="btn btn-primary" value="Incluir">
 
                 </form>
             </div>
@@ -19,15 +19,21 @@
         <div class="row">
             {{#each tarefas}}
                 <div class="col-12">
-                    <div class="card">
+                     <div class="card {{#if (gte custo 1000)}}highlight{{/if}}">
                         <div class="textos">
+                            <p>{{id}}</p>
                             <p>{{nome}}</p>
                             <p>R${{custo}}</p>
                             <p>{{data_limite}}</p>
                         </div>
-                        <a href="/formularioEditar/{{id}}" class="btn btn-warning">Alterar</a>
-                        <a href="/remover/{{id}}" class="btn btn-danger">Remover</a>
-
+                        <div class="btn-container">
+                            <a href="/formularioEditar/{{id}}" class="btn btn-warning">
+                                <i class="fas fa-edit"></i> <!-- Ícone de editar -->
+                            </a>
+                            <a href="/remover/{{id}}" class="btn btn-danger">
+                                <i class="fas fa-trash-alt"></i> <!-- Ícone de remover -->
+                            </a>
+                        </div>
                     </div>
                 </div>
             {{/each}}
