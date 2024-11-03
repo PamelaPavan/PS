@@ -79,29 +79,45 @@ app.get('/:situacao', function(req, res){
     
 });
 
-// Rota para Incluir tarefas
 app.post('/incluir', function(req, res){
-    try{
+    try {
         let nome = req.body.nome;
-    let custo = req.body.custo;
-    let data_limite = req.body.data_limite ? `'${req.body.data_limite}'` : 'NULL';
-    
-    // Validar o nome da tarefa e o valor
-    if(nome == '' || custo == '' || isNaN(custo)){
-        res.redirect('/falhaIncluir');
-    }else{
-        let sql = `INSERT INTO tarefas (nome, custo, data_limite) VALUES ('${nome}', ${custo}, ${data_limite})`;
+        let custo = req.body.custo;
+        let data_limite = req.body.data_limite ? `'${req.body.data_limite}'` : 'NULL';
 
-        connection.query(sql, function(erro, retorno){
-            if (erro) throw erro;
-            console.log(retorno);
-    });
-        res.redirect('/okIncluir');
-    }    
-    }catch(erro){
+        // Validar o nome da tarefa e o valor
+        if (nome == '' || custo == '' || isNaN(custo)) {
+            res.redirect('/falhaIncluir');
+        } else {
+            // Verificar se o nome da tarefa já existe
+            let sqlVerificar = `SELECT * FROM tarefas WHERE nome = '${nome}'`;
+            connection.query(sqlVerificar, function(erro, resultado) {
+                if (erro) throw erro;
+
+                if (resultado.length > 0) {
+                    // Nome da tarefa já existe; buscar lista de tarefas para manter a exibição
+                    connection.query('SELECT * FROM tarefas', function(erro, tarefas) {
+                        if (erro) throw erro;
+                        // Renderiza a página com a lista de tarefas e a mensagem de erro
+                        return res.render('formulario', { erro: 'O nome da tarefa já existe.', tarefas: tarefas });
+                    });
+                } else {
+                    // Inserir nova tarefa
+                    let sqlInserir = `INSERT INTO tarefas (nome, custo, data_limite) VALUES ('${nome}', ${custo}, ${data_limite})`;
+                    connection.query(sqlInserir, function(erro, retorno) {
+                        if (erro) throw erro;
+                        console.log(retorno);
+                        res.redirect('/okIncluir');
+                    });
+                }
+            });
+        }
+    } catch (erro) {
         res.redirect('/falhaIncluir');
     }
 });
+
+
 
 //Rota para redirecionar para o formulário de edição
 app.get('/formularioEditar/:id', function(req, res){
@@ -154,11 +170,11 @@ app.post('/editar', function(req, res) {
     connection.query(sqlVerificaNome, [nome, id], function(erro, resultado) {
         if (erro) throw erro;
 
-        if (resultado[0].total > 0) {
-           
-            return res.render('formularioEditar', {erro: 'O nome da tarefa já existe.'});
+        else if (resultado[0].total > 0) {
             
-        } {
+            return res.render('formularioEditar', {erro: 'O nome da tarefa já existe.'});
+                
+        } else{
             // Atualizar a tarefa no banco de dados
             let sqlAtualiza = `UPDATE tarefas SET nome = ?, custo = ?, data_limite = ? WHERE id = ?`;
             connection.query(sqlAtualiza, [nome, custo, data_limite, id], function(erro) {
@@ -168,28 +184,7 @@ app.post('/editar', function(req, res) {
         }
     });
 });
-app.get('/nomeExistente', function(req, res) {
-    let mensagemErro = 'O nome da tarefa já existe. Por favor, escolha outro nome.';
-    
-    let sql = 'SELECT * FROM tarefas';
-    
-    connection.query(sql, function(erro, tarefas) {
-        if (erro) throw erro;
 
-        // Para a tarefa específica que estava sendo editada, você pode precisar armazenar o ID
-        let tarefaId = req.query.id; // Obter o ID da tarefa do query string, se necessário
-
-        // Se a tarefa ID não estiver disponível, escolha uma tarefa padrão
-        let tarefaAtual = tarefas.find(t => t.id === parseInt(tarefaId)) || {}; // Obtenha a tarefa ou um objeto vazio
-
-        // Renderiza o formulário de edição passando a mensagem de erro e a tarefa atual
-        res.render('formularioEditar', {
-            tarefas: tarefas,
-            erro: mensagemErro,
-            tarefa: tarefaAtual // Passa a tarefa que está sendo editada
-        });
-    });
-});
 
 
 //servidor
