@@ -1,22 +1,25 @@
 <main>
-    {{!-- Formulário--}}
+    {{#if erro}}
+        <div class="alert alert-danger" role="alert">{{erro}}</div>
+    {{/if}}
+
+    {{!-- Formulário de Edição --}}
     <div class="container">
         <div class="row">
             <div class="col-6 offset-4">
                 <form action="/editar" method="post">
-                    <input type="hidden" name="id"               value="{{tarefa.id}}" readonly>
-                    <input type="text"   name="nome"             value="{{tarefa.nome}}"        class="form-control" placeholder="Nome da Tarefa">
-                    <input type="number" name="custo"            value="{{tarefa.custo}}"       class="form-control" placeholder="Custo da Tarefa">
-                    <input type="date"   name="data_limite"      value="{{tarefa.data_limite}}" class="form-control" aria-label="Data Limite da Tarefa">
+                    <input type="hidden" name="id" value="{{tarefa.id}}" readonly>
+                    <input type="text" name="nome" value="{{tarefa.nome}}" class="form-control" placeholder="Nome da Tarefa">
+                    <input type="number" name="custo" value="{{tarefa.custo}}" class="form-control" placeholder="Custo da Tarefa">
+                    <input type="date" name="data_limite" value="{{tarefa.data_limite}}" class="form-control" aria-label="Data Limite da Tarefa">
                     <input type="submit" class="btn btn-primary" value="Alterar">
                     <a href="/" class="btn btn-secondary">Cancelar</a>
                 </form>
-
             </div>
         </div>
     </div>
 
-    {{!--Listagem das Tarefas--}}
+    {{!-- Listagem das Tarefas --}}
     <div class="container">
         <div class="row">
             {{#each tarefas}}
@@ -30,17 +33,15 @@
                         </div>
                         <div class="btn-container">
                             <a href="/formularioEditar/{{id}}" class="btn btn-warning">
-                                <i class="fas fa-edit"></i> <!-- Ícone de editar -->
+                                <i class="fas fa-edit"></i>
                             </a>
                             <a href="/remover/{{id}}" class="btn btn-danger">
-                                <i class="fas fa-trash-alt"></i> <!-- Ícone de remover -->
+                                <i class="fas fa-trash-alt"></i>
                             </a>
                         </div>
                     </div>
                 </div>
             {{/each}}
-            
         </div>
-
     </div>
 </main>

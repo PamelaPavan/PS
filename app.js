@@ -130,36 +130,67 @@ app.get('/remover/:id', function(req, res){
         if(erro) throw erro;
 
     });
-    res.redirect('/okRemover');
+    res.redirect('/');
     }catch(erro){
-        res.redirect('/falhaRemover');
+        res.redirect('/');
     }
 });
 
 
 app.post('/editar', function(req, res) {
-
-    // Obter os dados do formulário e verificar se todos estão definidos
+    // Obter os dados do formulário
     let id = req.body.id;
     let nome = req.body.nome;
     let custo = req.body.custo;
     let data_limite = req.body.data_limite ? `'${req.body.data_limite}'` : 'NULL';
 
-    //Validar nome e valor da tarefa
-    if(nome=='' || custo == '' || isNaN(custo)){
-        res.redirect('/falhaEdicao');
-    }else{
-        // Atualizar a tarefa no banco de dados
-        let sql = `UPDATE tarefas SET nome = '${nome}', custo = ${custo}, data_limite = ${data_limite} WHERE id = ${id}`;
+    // Validar nome e valor da tarefa
+    if (nome === '' || custo === '' || isNaN(custo)) {
+        return res.redirect('/');
+    }
 
-        connection.query(sql, function(erro, retorno) {
-            if (erro) throw erro;
-        });
+    // Verificar se o nome já existe
+    const sqlVerificaNome = `SELECT COUNT(*) AS total FROM tarefas WHERE nome = ? AND id <> ?`;
+    connection.query(sqlVerificaNome, [nome, id], function(erro, resultado) {
+        if (erro) throw erro;
 
-        res.redirect('/okEdicao');
-    }   
-
+        if (resultado[0].total > 0) {
+           
+            return res.render('formularioEditar', {erro: 'O nome da tarefa já existe.'});
+            
+        } {
+            // Atualizar a tarefa no banco de dados
+            let sqlAtualiza = `UPDATE tarefas SET nome = ?, custo = ?, data_limite = ? WHERE id = ?`;
+            connection.query(sqlAtualiza, [nome, custo, data_limite, id], function(erro) {
+                if (erro) throw erro;
+                res.redirect('/');
+            });
+        }
+    });
 });
+app.get('/nomeExistente', function(req, res) {
+    let mensagemErro = 'O nome da tarefa já existe. Por favor, escolha outro nome.';
+    
+    let sql = 'SELECT * FROM tarefas';
+    
+    connection.query(sql, function(erro, tarefas) {
+        if (erro) throw erro;
+
+        // Para a tarefa específica que estava sendo editada, você pode precisar armazenar o ID
+        let tarefaId = req.query.id; // Obter o ID da tarefa do query string, se necessário
+
+        // Se a tarefa ID não estiver disponível, escolha uma tarefa padrão
+        let tarefaAtual = tarefas.find(t => t.id === parseInt(tarefaId)) || {}; // Obtenha a tarefa ou um objeto vazio
+
+        // Renderiza o formulário de edição passando a mensagem de erro e a tarefa atual
+        res.render('formularioEditar', {
+            tarefas: tarefas,
+            erro: mensagemErro,
+            tarefa: tarefaAtual // Passa a tarefa que está sendo editada
+        });
+    });
+});
+
 
 //servidor
 app.listen(8080);
