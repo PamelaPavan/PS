@@ -63,25 +63,12 @@ app.post('/listar', function(req, res){
     let custo = req.body.custo;
     let data_limite = req.body.data_limite ? `'${req.body.data_limite}'` : 'NULL';
     
-    // SQL com parêntese de fechamento corrigido
+    
     let sql = `INSERT INTO tarefas (nome, custo, data_limite) VALUES ('${nome}', ${custo}, ${data_limite})`;
 
     connection.query(sql, function(erro, retorno){
         if (erro) throw erro;
         console.log(retorno);
-    });
-    res.redirect('/');
-});
-
-//Rota para remover tarefas
-app.get('/remover/:id', function(req, res){
-    
-    let sql = `DELETE FROM tarefas WHERE id = ${req.params.id}`;
-
-    connection.query(sql, function(erro, retorno){
-        //Caso falhe
-        if(erro) throw erro;
-
     });
     res.redirect('/');
 });
@@ -96,6 +83,45 @@ app.get('/formularioEditar/:id', function(req, res){
 
         res.render('formularioEditar', {tarefa:retorno[0]});
 
+    });
+
+});
+
+
+//Rota para remover tarefas
+app.get('/remover/:id', function(req, res){
+    
+    let sql = `DELETE FROM tarefas WHERE id = ${req.params.id}`;
+
+    connection.query(sql, function(erro, retorno){
+        //Caso falhe
+        if(erro) throw erro;
+
+    });
+    res.redirect('/');
+});
+
+
+app.post('/editar', function(req, res) {
+
+    // Obter os dados do formulário e verificar se todos estão definidos
+    let id = req.body.id;
+    let nome = req.body.nome;
+    let custo = req.body.custo;
+    let data_limite = req.body.data_limite ? `'${req.body.data_limite}'` : 'NULL';
+
+    console.log(id);
+    console.log(nome);
+    console.log(custo);
+    console.log(data_limite);
+
+    // Atualizar a tarefa no banco de dados
+    let sql = `UPDATE tarefas SET nome = '${nome}', custo = ${custo}, data_limite = ${data_limite} WHERE id = ${id}`;
+
+    connection.query(sql, function(erro, retorno) {
+        if (erro) throw erro;
+
+        res.redirect('/');
     });
 
 });
