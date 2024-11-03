@@ -86,5 +86,19 @@ app.get('/remover/:id', function(req, res){
     res.redirect('/');
 });
 
+//Rota para redirecionar para o formulário de edição
+app.get('/formularioEditar/:id', function(req, res){
+
+    let sql = `SELECT * FROM tarefas WHERE id = ${req.params.id}`;
+
+    connection.query(sql, function(erro, retorno){
+        if (erro) throw erro;
+
+        res.render('formularioEditar', {tarefa:retorno[0]});
+
+    });
+
+});
+
 //servidor
 app.listen(8080);

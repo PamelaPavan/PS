@@ -3,12 +3,13 @@
     <div class="container">
         <div class="row">
             <div class="col-6 offset-4">
-                <form action="/listar" method="post">
-                    <input type="text"   name="nome" class="form-control" placeholder="Nome da Tarefa">
-                    <input type="number" name="custo" class="form-control" placeholder="Custo da Tarefa">
-                    <input type="date"   name="data_limite" class="form-control" aria-label="Data Limite da Tarefa">
+                <form action="/editar" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="id"    value="{{tarefa.id}}">
+                    <input type="text"   name="nome"  value="{{tarefa.nome}}" class="form-control" placeholder="Nome da Tarefa">
+                    <input type="number" name="custo" value="{{tarefa.custo}}" class="form-control" placeholder="Custo da Tarefa">
+                    <input type="date"   name="data_limite" value="{{tarefa.data_limite}}" class="form-control" aria-label="Data Limite da Tarefa">
                     <input type="submit" class="btn btn-primary" value="Listar">
-
+                    <a href="/" class="btn btn-secondary">Cancelar</a>
                 </form>
             </div>
         </div>
