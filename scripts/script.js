@@ -1,9 +1,18 @@
-function confirmarExclusao(event, id) {
-    event.preventDefault(); // Evita que o link redirecione imediatamente
+let idParaExcluir = null;
 
-    const confirmacao = confirm("Tem certeza de que deseja excluir esta tarefa?");
-    if (confirmacao) {
-        // Redireciona para a rota de exclusão se a confirmação for positiva
-        window.location.href = `/remover/${id}`;
-    }
+function confirmarExclusao(event, id) {
+    event.preventDefault();
+    idParaExcluir = id;
+    
+    const confirmacaoModal = new bootstrap.Modal(document.getElementById('confirmacaoModal'));
+    confirmacaoModal.show();
 }
+
+document.getElementById('btnConfirmarExclusao').onclick = function () {
+    if (idParaExcluir !== null) {
+        // Redireciona para a rota de remoção
+        window.location.href = `/remover/${idParaExcluir}`;
+    }
+    const confirmacaoModal = bootstrap.Modal.getInstance(document.getElementById('confirmacaoModal'));
+    confirmacaoModal.hide();
+};
