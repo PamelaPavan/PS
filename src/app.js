@@ -147,22 +147,70 @@ app.post('/editar', function(req, res) {
     });
 });
 
-// Rota para reordenar tarefas
+
 app.post('/reordenar', function(req, res) {
-    const novaOrdem = req.body.ordem;
+    console.log("Dados recebidos:", req.body);
+    const novaOrdem = req.body.ordem_apresentacao;
 
-    novaOrdem.forEach((id, index) => {
-        let sql = 'UPDATE tarefas SET ordem_apresentacao = ? WHERE id = ?';
-        connection.query(sql, [index + 1, id], function(erro) {
-            if (erro) {
-                console.error('Erro ao atualizar a ordem da tarefa:', erro);
-                return res.status(500).json({ error: 'Erro ao atualizar a ordem das tarefas' });
-            }
+    if (!Array.isArray(novaOrdem)) {
+        return res.status(400).json({ error: 'Ordem inválida' });
+    }
+
+    connection.beginTransaction((err) => {
+        if (err) {
+            console.error('Erro ao iniciar a transação:', err);
+            return res.status(500).json({ error: 'Erro ao iniciar a transação' });
+        }
+
+        // Passo 1: Atualiza para valores altos temporariamente
+        const tempPromises = novaOrdem.map((id, index) => {
+            return new Promise((resolve, reject) => {
+                const sql = 'UPDATE tarefas SET ordem_apresentacao = ? WHERE id = ?';
+                connection.query(sql, [index + 1000, id], (erro) => {
+                    if (erro) return reject(erro);
+                    resolve();
+                });
+            });
         });
-    });
 
-    res.status(200).json({ message: 'Ordem das tarefas atualizada com sucesso' });
+        // Após o passo temporário, atualiza com a nova ordem e o custo
+        Promise.all(tempPromises)
+            .then(() => {
+                const updatePromises = novaOrdem.map((id, index) => {
+                    const novoCusto = (index + 1) * 10; // Atualiza custo conforme a nova ordem;
+
+                    return new Promise((resolve, reject) => {
+                        const sql = 'UPDATE tarefas SET ordem_apresentacao = ?, custo = ? WHERE id = ?';
+                        connection.query(sql, [index + 1, novoCusto, id], (erro) => {
+                            if (erro) return reject(erro);
+                            resolve();
+                        });
+                    });
+                });
+
+                return Promise.all(updatePromises);
+            })
+            .then(() => {
+                connection.commit((commitErr) => {
+                    if (commitErr) {
+                        connection.rollback(() => {
+                            console.error('Erro ao confirmar a transação:', commitErr);
+                            res.status(500).json({ error: 'Erro ao confirmar a transação' });
+                        });
+                    } else {
+                        res.status(200).json({ message: 'Ordem e custo das tarefas atualizados com sucesso' });
+                    }
+                });
+            })
+            .catch((erro) => {
+                connection.rollback(() => {
+                    console.error('Erro ao atualizar a ordem:', erro);
+                    res.status(500).json({ error: 'Erro ao atualizar a ordem das tarefas' });
+                });
+            });
+    });
 });
+
 
 // Servidor
 app.listen(8080);
