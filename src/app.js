@@ -63,10 +63,12 @@ Handlebars.registerHelper('gte', function(a, b) {
 
 // Rota principal
 app.get('/', function(req, res) {
+    let situacao = req.query.situacao; // Captura o valor do parâmetro 'situacao' se existir
     let sql = 'SELECT * FROM tarefas ORDER BY ordem_apresentacao ASC';
+    
     connection.query(sql, function(erro, retorno) {
         if (erro) throw erro;
-        res.render('formulario', { tarefas: retorno });
+        res.render('formulario', { tarefas: retorno, situacao }); // Passa a mensagem 'situacao' para o template
     });
 });
 
@@ -101,7 +103,7 @@ app.post('/incluir', function(req, res) {
                     let sqlInserir = 'INSERT INTO tarefas (nome, custo, data_limite) VALUES (?, ?, ?)';
                     connection.query(sqlInserir, [nome, custo, data_limite], function(erro, retorno) {
                         if (erro) throw erro;
-                        res.redirect('/okIncluir');
+                        res.redirect('/Tarefa incluida!');
                     });
                 }
             });
@@ -120,16 +122,17 @@ app.get('/formularioEditar/:id', function(req, res) {
     });
 });
 
+
 // Rota para remover tarefas
 app.get('/remover/:id', function(req, res) {
     try {
         let sql = 'DELETE FROM tarefas WHERE id = ?';
         connection.query(sql, [req.params.id], function(erro) {
             if (erro) throw erro;
-            res.redirect('/');
+            res.redirect('/?situacao=Tarefa removida com sucesso!');
         });
     } catch (erro) {
-        res.redirect('/');
+        res.redirect('/?situacao=Erro ao remover a tarefa.');
     }
 });
 
@@ -139,7 +142,7 @@ app.post('/editar', function(req, res) {
     data_limite = data_limite || null;
 
     if (nome === '' || custo === '' || isNaN(custo)) {
-        return res.redirect('/');
+        return res.redirect('/?situacao=Erro: campos inválidos.');
     }
 
     let sqlVerificaNome = 'SELECT COUNT(*) AS total FROM tarefas WHERE nome = ? AND id <> ?';
@@ -147,16 +150,17 @@ app.post('/editar', function(req, res) {
         if (erro) throw erro;
 
         if (resultado[0].total > 0) {
-            return res.render('formularioEditar', { erro: 'O nome da tarefa já existe.' });
+            return res.redirect('/?situacao=Erro: o nome da tarefa já existe.');
         } else {
             let sqlAtualiza = 'UPDATE tarefas SET nome = ?, custo = ?, data_limite = ? WHERE id = ?';
             connection.query(sqlAtualiza, [nome, custo, data_limite, id], function(erro) {
                 if (erro) throw erro;
-                res.redirect('/');
+                res.redirect('/?situacao=Tarefa editada com sucesso!');
             });
         }
     });
 });
+
 
 app.post('/reordenar', function(req, res) {
     console.log("Dados recebidos:", req.body);

@@ -1,4 +1,18 @@
+
+
 let idParaExcluir = null;
+
+document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(() => {
+        const alertBox = document.getElementById('alert-situacao');
+        if (alertBox) {
+            alertBox.style.transition = 'opacity 0.5s ease';
+            alertBox.style.opacity = '0';
+            setTimeout(() => alertBox.remove(), 500); // Remove o elemento após a transição
+        }
+    }, 3000);
+});
+
 
 function confirmarExclusao(event, id) {
     event.preventDefault();
@@ -21,6 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     }
 });
+
 function toggleConcluida(checkbox) {
     const card = checkbox.closest('.card');
     card.classList.toggle('concluida', checkbox.checked);

@@ -21,6 +21,15 @@
     
 </head>
 <body>
+    {{#if erro}}
+        <div class="alert alert-danger" role="alert">{{erro}}</div>
+    {{/if}}
+    
+    {{#if situacao}}
+        <div id="alert-situacao" class="alert alert-danger" role="alert">{{situacao}}</div>
+    {{/if}}
+
+
     <h1>Lista de Tarefas</h1>
     <hr class="linha-personalizada">
     {{{body}}}
