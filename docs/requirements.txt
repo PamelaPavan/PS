@@ -1,6 +1,0 @@
-express
-nodemon
-mysql2
-express-handlebars
-dotenv
-bootstrap
