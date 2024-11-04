@@ -25,11 +25,12 @@ dotenv.config();
 
 // Cria a conexão com o banco de dados
 const connection = mysql.createConnection({
-    host: process.env.host,
-    user: process.env.user,
-    password: process.env.password,
-    port: process.env.port,
-    database: process.env.database
+    
+    host:junction.proxy.rlwy.net,
+    user:root,
+    password:PltHvkCRDBYjLdneMPuRgstMTAajOPCX,
+    port:29479,
+    database:railway
 });
 
 // Conecta ao banco de dados
