@@ -28,6 +28,12 @@
                         <p>R${{custo}}</p>
                         <p>{{data_limite}}</p>
                     </div>
+                    <button class="btn btn-secondary" onclick="moverParaCima({{id}})" {{#if @first}}disabled{{/if}}>
+                        ↑
+                    </button>
+                    <button class="btn btn-secondary" onclick="moverParaBaixo({{id}})" {{#if @last}}disabled{{/if}}>
+                        ↓
+                    </button>
                     <div class="btn-container">
                         <a href="/formularioEditar/{{id}}" class="btn btn-warning">
                             <i class="fas fa-edit"></i>
