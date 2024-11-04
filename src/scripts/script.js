@@ -8,11 +8,16 @@ function confirmarExclusao(event, id) {
     confirmacaoModal.show();
 }
 
-document.getElementById('btnConfirmarExclusao').onclick = function () {
-    if (idParaExcluir !== null) {
-        // Redireciona para a rota de remoção
-        window.location.href = `/remover/${idParaExcluir}`;
+document.addEventListener('DOMContentLoaded', () => {
+    const btnConfirmarExclusao = document.getElementById('btnConfirmarExclusao');
+    if (btnConfirmarExclusao) {
+        btnConfirmarExclusao.onclick = function () {
+            if (idParaExcluir !== null) {
+                // Redireciona para a rota de remoção
+                window.location.href = `/remover/${idParaExcluir}`;
+            }
+            const confirmacaoModal = bootstrap.Modal.getInstance(document.getElementById('confirmacaoModal'));
+            confirmacaoModal.hide();
+        };
     }
-    const confirmacaoModal = bootstrap.Modal.getInstance(document.getElementById('confirmacaoModal'));
-    confirmacaoModal.hide();
-};
+});
