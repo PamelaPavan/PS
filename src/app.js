@@ -23,26 +23,7 @@ app.use(express.urlencoded({ extended: false }));
 // Carrega as variáveis de ambiente do arquivo .env
 dotenv.config();
 
-// Cria a conexão com o banco de dados
-const connection = mysql.createConnection({
-    
-    host:junction.proxy.rlwy.net,
-    user:root,
-    password:PltHvkCRDBYjLdneMPuRgstMTAajOPCX,
-    port:29479,
-    database:railway
-});
 
-// Conecta ao banco de dados
-connection.connect((err) => {
-    if (err) {
-        console.error('Erro ao conectar ao banco de dados:', err);
-        return;
-    }
-    console.log('Conectado ao banco de dados!');
-});
-
-module.exports = connection;
 
 const Handlebars = require('handlebars');
 
