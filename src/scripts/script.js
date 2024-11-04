@@ -21,3 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     }
 });
+function toggleConcluida(checkbox) {
+    const card = checkbox.closest('.card');
+    card.classList.toggle('concluida', checkbox.checked);
+}

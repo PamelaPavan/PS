@@ -20,15 +20,24 @@
     <div class="container">
     <div id="listaTarefas" class="row">
         {{#each tarefas}}
-            <div class="col-12 tarefa-item" data-id="{{id}}">
+            <div class="col-12 tarefa-item" data-id="{{id}}">               
+                
                 <div class="card {{#if (gte custo 1000)}}highlight{{/if}}">
-                    <div class="textos">
-                        <p>{{id}}</p>
-                        <p>{{nome}}</p>
-                        <p>R${{custo}}</p>
-                        <p>{{data_limite}}</p>
-                    </div>
                     <div class="btn-container">
+                        <input type="checkbox" onclick="toggleConcluida(this)" class="form-check-input">
+                            <span class="concluida-text">Feito!</span>
+                    </div>
+
+                    <div class="textos">
+                        <p>{{formatDate data_limite}}</p>
+                        <p>{{nome}}</p>
+                        <p>R${{custo}}</p>                        
+                    </div>
+                    
+                     
+
+                    <div class="btn-container">
+                        
                     <button class="btn btn-secondary btn-mover mover-cima" {{#if @first}}disabled{{/if}}>
                         ↑
                     </button>
@@ -39,6 +48,7 @@
 
                     </button>
                     <div class="btn-container">
+                        
                         <a href="/formularioEditar/{{id}}" class="btn btn-warning">
                             <i class="fas fa-edit"></i>
                         </a>
