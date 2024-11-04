@@ -163,14 +163,20 @@ input[type="checkbox"] {
     position: flex;
     margin: 20px;
 }
-.btn-primary {
+.btn-primary, .btn-danger {
     background-color: #FC6998;
     border-color: #FC6998;
+    width: 100%;
 }
 
 .btn-primary:hover {
     background-color: #FF85A1; /* Ajuste a cor conforme necessário */
     border-color: #FF85A1; /* Ajuste a cor conforme necessário */
+}
+.btn-secondary{
+    background-color: #6a6868;
+    border-color: #6a6868;
+    width: 100%
 }
 
 /* Modifica a cor padrão dos botões */

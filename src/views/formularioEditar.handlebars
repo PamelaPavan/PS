@@ -5,8 +5,8 @@
 
     {{!-- Formulário de Edição --}}
     <div class="container">
-        <div class="row">
-            <div class="col-6 offset-4">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
                 <form action="/editar" method="post">
                     <input type="hidden" name="id" value="{{tarefa.id}}" readonly>
                     <input type="text" name="nome" value="{{tarefa.nome}}" class="form-control" placeholder="Nome da Tarefa">

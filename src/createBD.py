@@ -31,7 +31,7 @@ try:
         create_table_query = """
         CREATE TABLE IF NOT EXISTS tarefas (
             id INT AUTO_INCREMENT PRIMARY KEY,
-            nome VARCHAR(50),
+            nome VARCHAR(1000),
             custo DOUBLE,
             data_limite DATE,
             ordem_apresentacao INT UNIQUE
