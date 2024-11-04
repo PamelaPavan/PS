@@ -147,7 +147,6 @@ app.post('/editar', function(req, res) {
     });
 });
 
-
 app.post('/reordenar', function(req, res) {
     console.log("Dados recebidos:", req.body);
     const novaOrdem = req.body.ordem_apresentacao;
@@ -162,7 +161,7 @@ app.post('/reordenar', function(req, res) {
             return res.status(500).json({ error: 'Erro ao iniciar a transação' });
         }
 
-        // Passo 1: Atualiza para valores altos temporariamente
+        // Passo 1: Atualiza para valores altos temporariamente para evitar duplicidade
         const tempPromises = novaOrdem.map((id, index) => {
             return new Promise((resolve, reject) => {
                 const sql = 'UPDATE tarefas SET ordem_apresentacao = ? WHERE id = ?';
@@ -173,15 +172,13 @@ app.post('/reordenar', function(req, res) {
             });
         });
 
-        // Após o passo temporário, atualiza com a nova ordem e o custo
+        // Passo 2: Atualiza para a nova ordem correta
         Promise.all(tempPromises)
             .then(() => {
                 const updatePromises = novaOrdem.map((id, index) => {
-                    const novoCusto = (index + 1) * 10; // Atualiza custo conforme a nova ordem;
-
                     return new Promise((resolve, reject) => {
-                        const sql = 'UPDATE tarefas SET ordem_apresentacao = ?, custo = ? WHERE id = ?';
-                        connection.query(sql, [index + 1, novoCusto, id], (erro) => {
+                        const sql = 'UPDATE tarefas SET ordem_apresentacao = ? WHERE id = ?';
+                        connection.query(sql, [index + 1, id], (erro) => {
                             if (erro) return reject(erro);
                             resolve();
                         });
@@ -198,7 +195,7 @@ app.post('/reordenar', function(req, res) {
                             res.status(500).json({ error: 'Erro ao confirmar a transação' });
                         });
                     } else {
-                        res.status(200).json({ message: 'Ordem e custo das tarefas atualizados com sucesso' });
+                        res.status(200).json({ message: 'Ordem das tarefas atualizada com sucesso' });
                     }
                 });
             })

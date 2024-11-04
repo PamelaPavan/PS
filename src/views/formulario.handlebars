@@ -28,11 +28,15 @@
                         <p>R${{custo}}</p>
                         <p>{{data_limite}}</p>
                     </div>
-                    <button class="btn btn-secondary" onclick="moverParaCima({{id}})" {{#if @first}}disabled{{/if}}>
+                    <div class="btn-container">
+                    <button class="btn btn-secondary btn-mover mover-cima" {{#if @first}}disabled{{/if}}>
                         ↑
                     </button>
-                    <button class="btn btn-secondary" onclick="moverParaBaixo({{id}})" {{#if @last}}disabled{{/if}}>
+                    <button class="btn btn-secondary btn-mover mover-baixo" {{#if @last}}disabled{{/if}}>
                         ↓
+                    </button>
+                </div>
+
                     </button>
                     <div class="btn-container">
                         <a href="/formularioEditar/{{id}}" class="btn btn-warning">
