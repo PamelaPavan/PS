@@ -1,11 +1,13 @@
 <main>
+
+
     {{#if erro}}
         <div class="alert alert-danger" role="alert">{{erro}}</div>
     {{/if}}
     {{!-- Formulário --}}
     <div class="container">
-        <div class="row">
-            <div class="col-6 offset-4">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
                 <form action="/incluir" method="post">
                     <input type="text" name="nome" class="form-control" placeholder="Nome da Tarefa">
                     <input type="number" name="custo" class="form-control" placeholder="Custo da Tarefa">
@@ -15,6 +17,7 @@
             </div>
         </div>
     </div>
+
 
     {{!-- Listagem das Tarefas --}}
     <div class="container">

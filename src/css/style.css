@@ -1,11 +1,31 @@
-
-form{
-    margin-top: 30px;
-    text-align: center;
+/* Definição das fontes */
+@font-face {
+    font-family: 'Birds of Paradise';
+    src: url('fonts/adelia_3/adelia.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
 }
 
-form input{
-    margin-bottom: 10px;
+@font-face {
+    font-family: 'Joseph Sophia';
+    src: url('fonts/josephsophia/josephsophia.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color:#FFCCBD;
+    
+}
+
+h1 {
+    font-family: 'Joseph Sophia', sans-serif;
+    text-align: center;
+    margin-top: 30px;
+    font-size: 80px;
+    font-weight: medium;
 }
 
 .card {
@@ -13,35 +33,54 @@ form input{
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    background-color: #FFADBB;
+    margin-top: 30px;
 }
+
+form {
+    margin-top: 30px;
+    text-align: center;
+}
+
+form input {
+    margin-bottom: 10px;
+}
+
+form input[type="submit"] {
+    margin-top: 10px;
+    display: block;
+    width: 100%;
+}
+
 
 .highlight {
-    background-color: yellow;
+    background-color: #FFFBDE;
 }
 
-.textos{
-    margin:10px;
+.textos {
+    margin: 10px;
     flex: 1;
 }
 
-form input[type="submit"]{
+form input[type="submit"] {
     margin-top: 10px;
 }
 
-.card a{
-    margin-top: 5px;
+.card a {
+    margin-top: 4px;
 }
+
 
 .btn-container {
     display: flex;
     flex-direction: column;
-    margin-left: 10px;
+
+    margin-right: 10px;
 }
 
-.btn{
+.btn {
     margin-bottom: 5px;
 }
-
 
 .modal {
     position: fixed;
@@ -63,6 +102,7 @@ form input[type="submit"]{
     position: relative;
     top: 20%;
 }
+
 .close {
     color: #aaa;
     font-size: 1.5rem;
@@ -78,30 +118,65 @@ form input[type="submit"]{
     color: black;
     text-decoration: none;
 }
-
 .concluida {
-    background-color: #333; /* Cor mais escura */
-    color: #fff;
-    opacity: 0.7; /* Leve transparência */
+    color: #534c4c;
+    opacity: 0.6; /* Leve transparência */
 }
+
 
 .concluida-text {
     display: none;
     position: absolute;
-    top:20%;
-    left:1.5%;
+    top: 20%;
+    left: 1.5%;
 }
 
 .btn-container input[type="checkbox"]:checked + .concluida-text {
     display: inline;
-    
 }
-.btn-container input[type="checkbox"]:checked{
-    background-color: green;
-    border-color: green;
+
+.btn-container input[type="checkbox"]:checked {
+    background-color: #FC6998;
 }
+
 input[type="checkbox"] {
-    border-color: rgb(14, 15, 14);
+    border-color:#FC6998;
     position: flex;
-    margin:20px;
+    margin: 20px;
 }
+.btn-primary {
+    background-color: #FC6998;
+    border-color: #FC6998;
+}
+
+.btn-primary:hover {
+    background-color: #FF85A1; /* Ajuste a cor conforme necessário */
+    border-color: #FF85A1; /* Ajuste a cor conforme necessário */
+}
+
+/* Modifica a cor padrão dos botões */
+.btn-mover,
+.btn-warning,
+.btn-danger {
+    background-color: #FC6998;
+    border-color: #FC6998;
+    color: #fff;
+}
+
+/* Efeito de hover nos botões para uma cor mais clara */
+.btn-mover:hover,
+.btn-warning:hover,
+.btn-danger:hover {
+    background-color: #FF85A1;
+    border-color: #FF85A1;
+}
+
+/* Cor com transparência para o primeiro botão "Subir" e o último botão "Descer" */
+.btn-mover.mover-cima:disabled,
+.btn-mover.mover-baixo:disabled {
+    background-color: rgba(252, 105, 152, 0.5); /* Cor #FC6998 com 50% de transparência */
+    border-color: rgba(252, 105, 152, 0.5);
+    color: #fff;
+    cursor: not-allowed;
+}
+
