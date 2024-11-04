@@ -1,10 +1,4 @@
 /* Definição das fontes */
-@font-face {
-    font-family: 'Birds of Paradise';
-    src: url('fonts/adelia_3/adelia.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
 
 @font-face {
     font-family: 'Joseph Sophia';
@@ -14,19 +8,39 @@
 }
 
 
+/* Margem abaixo do último card */
+#listaTarefas .tarefa-item:last-child {
+    margin-bottom: 30px;
+}
+
+
+
 body {
     font-family: 'Roboto', sans-serif;
     background-color:#FFCCBD;
     
 }
 
+
+
 h1 {
     font-family: 'Joseph Sophia', sans-serif;
     text-align: center;
-    margin-top: 30px;
     font-size: 80px;
     font-weight: medium;
+    padding-top: 20px; /* Ajuste o valor conforme necessário */
 }
+
+h2 {
+    font-family: 'Joseph Sophia', sans-serif;
+    text-align: center;
+    font-size: 40px;
+    font-weight: medium;
+    padding-top: 20px; /* Ajuste o valor conforme necessário */
+}
+
+
+
 
 .card {
     display: flex;
@@ -35,6 +49,8 @@ h1 {
     justify-content: space-between;
     background-color: #FFADBB;
     margin-top: 30px;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3); 
+
 }
 
 form {
@@ -64,6 +80,7 @@ form input[type="submit"] {
 
 form input[type="submit"] {
     margin-top: 10px;
+
 }
 
 .card a {
@@ -80,6 +97,8 @@ form input[type="submit"] {
 
 .btn {
     margin-bottom: 5px;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3); 
+
 }
 
 .modal {
@@ -180,3 +199,17 @@ input[type="checkbox"] {
     cursor: not-allowed;
 }
 
+.linha-personalizada {
+    border: none;
+    border-top: 2px solid #FF85A1; /* Cor e espessura da linha */
+    width: 80%; /* Ajuste a largura conforme necessário */
+    margin: 0 auto; /* Centraliza a linha horizontalmente */
+    margin-top: 30px;
+}
+.linha-personalizada2 {
+    border: none;
+    border-top: 2px solid #FF85A1; /* Cor e espessura da linha */
+    width: 40%; /* Ajuste a largura conforme necessário */
+    margin: 0 auto; /* Centraliza a linha horizontalmente */
+    margin-top: 10px;
+}
