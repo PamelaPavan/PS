@@ -33,44 +33,14 @@ project-root/
 │   ├── views/
 │   ├── .gitignore
 │   ├── app.js
-│   ├── createBD.py
 │   └── .env.example
 └── readme.md
 ```
 
 
 ## Como Executar o Projeto
-### Pré-requisitos
-- Node.js instalado
-- MySQL Workbench instalado
+Acesse: [Link - Sistema - Lista de Tarefas](https://listatarefa-pamela-pavan.up.railway.app/)
 
-### Passos
-1) Clone o repositório:
-    ```sh
-    git clone -b pamela-pavan https://github.com/PamelaPavan/PS_Sistema_de_Lista_de_Tarefas.git
-    ```
-2) Instale as dependências a partir do arquivo "requirements.txt":
-    ```sh
-    pip install -r requirements.txt
-    ```
-3) Crie um arquivo ".env" na pasta "src" e preencha com seus dados, seguindo a referência do arquivo ".env.example":
-   ```
-    host = seu host do banco de dados
-    user = seu user do banco de dados
-    password = sua senha do banco de dados
-    port = porta do banco de dados
-    database = nome do banco de dados
-   ```
-4) Caso já tenha o banco de dados, vá para o tópico 5
-   - Acesse o arquivo "createDB.py" através do caminho src\createBD.py
-   - Rode este código e o banco de dados será criado automáticamente no MySQL Workbench
-
-5) Abra o terminal na pasta contendo os arquivos "src" e inicie o servidor através do comando a seguir:
-    ```sh
-    nodemon app.js
-    ```
-
-6) Acesse ```localhost:8080``` para abrir a página web.  
 ## Funcionalidades
 1) <p align="justify">Na página principal do sistema possui campos de inserção para preencher com os valores de "Nome da Tarefa", "Custo da Tarefa" e data: "dd/mm/yyyy". Nesta parte é possível incluir registros selecionando o botão "Incluir";  
    Obs. Caso já exista uma tarefa com o novo nome escolhido, não será possível realizar a inclusão.  
@@ -89,10 +59,14 @@ Obs. Caso já exista uma tarefa com o novo nome escolhido, não será possível 
 <p align="justify">
 Além disso, é possível reordenar as tarefas utilizando "drag-and-drop" e também utilizando as setas localizadas na lateral dos cards.  
 </p>
+
 ## Autor
+
 Pâmela Aliny Cleto Pavan  
-linkedn: [Link](https://www.linkedin.com/in/pâmela-pavan-607693190/)  
-github: [Meu Repositório no Github](https://github.com/PamelaPavan)
+
+[Linkedin](https://www.linkedin.com/in/pâmela-pavan-607693190/)
+
+[Meu Repositório no Github](https://github.com/PamelaPavan)
 
 
 
