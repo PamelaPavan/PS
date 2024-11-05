@@ -23,7 +23,26 @@ app.use(express.urlencoded({ extended: false }));
 // Carrega as variáveis de ambiente do arquivo .env
 dotenv.config();
 
+// Carrega as variáveis de ambiente do arquivo .env
+dotenv.config();
 
+// Substitua a URL de conexão direta pela variável de ambiente
+const connectionUrl = process.env.DATABASE_URL;
+
+// Cria a conexão com o banco de dados usando a URL do .env
+const connection = mysql.createConnection(connectionUrl);
+
+
+// Conecta ao banco de dados
+connection.connect((err) => {
+    if (err) {
+        console.error('Erro ao conectar ao banco de dados:', err);
+        return;
+    }
+    console.log('Conexão bem-sucedida ao banco de dados!');
+});
+
+module.exports = connection;
 
 const Handlebars = require('handlebars');
 
