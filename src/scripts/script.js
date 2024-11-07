@@ -40,3 +40,16 @@ function toggleConcluida(checkbox) {
     const card = checkbox.closest('.card');
     card.classList.toggle('concluida', checkbox.checked);
 }
+document.addEventListener('DOMContentLoaded', () => {
+    const btnNovaTarefa = document.getElementById('btnNovaTarefa');
+    const containerNova = document.getElementById('Nova');
+
+    btnNovaTarefa.addEventListener('click', (event) => {
+        event.preventDefault(); // Evita o envio do formulário
+        containerNova.style.display = 'block'; // Mostra o container
+    });
+});
+document.getElementById('btnNovaTarefa').addEventListener('click', function() {
+    document.getElementById('Nova').style.display = 'block';
+    document.getElementById('Nova').scrollIntoView({ behavior: 'smooth' });
+});
