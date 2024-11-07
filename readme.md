@@ -23,9 +23,7 @@ Este projeto é uma aplicação web interativa que oferece uma interface para ca
 ## Estrutura de Pastas
 ```
 project-root/
-├── docs/
-│   ├── README.md
-│   └── requirements.txt
+
 ├── src/
 │   ├── css/
 │   ├── img/
