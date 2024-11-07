@@ -23,15 +23,11 @@ app.use(express.urlencoded({ extended: false }));
 // Carrega as variáveis de ambiente do arquivo .env
 dotenv.config();
 
-// Carrega as variáveis de ambiente do arquivo .env
-dotenv.config();
+// URL de conexão
+const connectionUrl = 'mysql://root:PltHvkCRDBYjLdneMPuRgstMTAajOPCX@junction.proxy.rlwy.net:29479/railway';
 
-// Substitua a URL de conexão direta pela variável de ambiente
-const connectionUrl = process.env.DATABASE_URL;
-
-// Cria a conexão com o banco de dados usando a URL do .env
+// Cria a conexão com o banco de dados
 const connection = mysql.createConnection(connectionUrl);
-
 
 // Conecta ao banco de dados
 connection.connect((err) => {

@@ -1,47 +1,37 @@
 <main>
+
     
-    {{!-- Formulário --}}
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <form action="/incluir" method="post">
-                    <input type="text" name="nome" class="form-control" placeholder="Nome da Tarefa">
-                    <input type="number" name="custo" class="form-control" placeholder="Custo da Tarefa">
-                    <input type="date" name="data_limite" class="form-control" aria-label="Data Limite da Tarefa">
-                    <input type="submit" class="btn btn-primary" value="Incluir">
-                </form>
-            </div>
-        </div>
-    </div>
-    <hr class="linha-personalizada">
     <h2>Tarefas Registradas</h2>
     <hr class="linha-personalizada2">
+    
     {{!-- Listagem das Tarefas --}}
     <div class="container">
+        <div class="lined-background"></div>
     <div id="listaTarefas" class="row">
         {{#each tarefas}}
             <div class="col-12 tarefa-item" data-id="{{id}}">               
                 
-                <div class="card {{#if (gte custo 1000)}}highlight{{/if}}">
-                    <div class="btn-container">
+                <div class="card ">
+                    <div class="btn-container" title="Marcar como concluída">
                         <input type="checkbox" onclick="toggleConcluida(this)" class="form-check-input">
                             <span class="concluida-text">Feito!</span>
                     </div>
 
-                    <div class="textos">
-                        <p>{{formatDate data_limite}}</p>
-                        <p>{{nome}}</p>
-                        <p>R${{custo}}</p>                        
+                    <div class="textos" title="Arraste para mover tarefa">
+                        <p class="{{#if (gte custo 1000)}}highlight{{/if}}">{{formatDate data_limite}}</p>
+                        <p class="{{#if (gte custo 1000)}}highlight{{/if}}">{{nome}}</p>
+                        <p class="{{#if (gte custo 1000)}}highlight{{/if}}">R${{custo}}                      
                     </div>
+
                     
                      
 
                     <div class="btn-container">
                         
-                    <button class="btn btn-secondary btn-mover mover-cima" {{#if @first}}disabled{{/if}}>
+                    <button class="btn btn-secondary btn-mover mover-cima" {{#if @first}}disabled{{/if}} title="Clique para subir a tarefa">
                         ↑
                     </button>
-                    <button class="btn btn-secondary btn-mover mover-baixo" {{#if @last}}disabled{{/if}}>
+                    <button class="btn btn-secondary btn-mover mover-baixo" {{#if @last}}disabled{{/if}} title="Clique para descer a tarefa">
                         ↓
                     </button>
                 </div>
@@ -49,10 +39,10 @@
                     </button>
                     <div class="btn-container">
                         
-                        <a href="/formularioEditar/{{id}}" class="btn btn-warning">
+                        <a href="/formularioEditar/{{id}}" class="btn btn-warning" title="Clique para editar a tarefa">
                             <i class="fas fa-edit"></i>
                         </a>
-                        <a href="#" class="btn btn-danger" onclick="(function(event) { confirmarExclusao(event, {{id}}); })(event)">
+                        <a href="#" class="btn btn-danger" onclick="(function(event) { confirmarExclusao(event, {{id}}); })(event)" title="Clique para remover a tarefa">
                             <i class="fas fa-trash-alt"></i>
                         </a>
                     </div>
@@ -80,4 +70,25 @@
             </div>
         </div>
     </div>
+{{!-- Formulário --}}
+<div class="container" >
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <input type="submit" class="btn btn-primary" value="Nova Tarefa" title="Clique para incluir uma nova tarefa" id="btnNovaTarefa">
+
+            <form action="/incluir" method="post" id="Nova" style="display: none;">
+                <h2>Registre sua nova tarefa</h2>
+                <p class="left-bold">Tarefa</p>
+                <input type="text" name="nome" class="form-control" placeholder="Ex. Contratar a Pâmela Pavan">
+                <p class="left-bold">Custo</p>
+                <input type="number" name="custo" class="form-control" placeholder="Ex. 0">
+                <p class="left-bold">Data Limite</p>
+                <input type="date" name="data_limite" class="form-control" aria-label="Data Limite da Tarefa">
+                <input type="submit" class="btn btn-primary" value="Incluir" title="Clique para incluir uma nova tarefa">
+            </form>
+        </div>
+    </div>
+</div>
+
+
 </main>

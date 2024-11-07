@@ -8,12 +8,15 @@
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <form action="/editar" method="post">
+                    <p class="left-bold">Tarefa</p>
                     <input type="hidden" name="id" value="{{tarefa.id}}" readonly>
                     <input type="text" name="nome" value="{{tarefa.nome}}" class="form-control" placeholder="Nome da Tarefa">
+                    <p class="left-bold">Custo</p>
                     <input type="number" name="custo" value="{{tarefa.custo}}" class="form-control" placeholder="Custo da Tarefa">
+                    <p class="left-bold">Data Limite</p>
                     <input type="date" name="data_limite" value="{{tarefa.data_limite}}" class="form-control" aria-label="Data Limite da Tarefa">
-                    <input type="submit" class="btn btn-primary" value="Alterar">
-                    <a href="/" class="btn btn-secondary">Cancelar</a>
+                    <input type="submit" class="btn btn-primary" value="Alterar" title="Clique para editar a tarefa">
+                    <a href="/" class="btn btn-secondary" title="Clique para cancelar a alteração">Cancelar</a>
                 </form>
             </div>
         </div>
