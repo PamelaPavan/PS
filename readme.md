@@ -55,6 +55,7 @@ project-root
 ```
 
 ## Arquitetura do Projeto
+![img|Arquitetura](src/img/Tarefas.drawio.png)
 
 ## Como Acessar
 Acesse: [Link - Lista de Tarefas](https://listatarefa-pamela-pavan.up.railway.app/)
