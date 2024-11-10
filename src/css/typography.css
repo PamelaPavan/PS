@@ -1,0 +1,29 @@
+/* typography.css */
+
+h1 {
+    font-family: 'Joseph Sophia', sans-serif;
+    text-align: center;
+    font-size: 80px;
+    font-weight: medium;
+    padding-top: 40px;
+}
+
+h2 {
+    font-family: 'Joseph Sophia', sans-serif;
+    text-align: center;
+    font-size: 40px;
+    padding-top: 20px;
+}
+
+.textos {
+    font-family: 'White Chocolate Mint', sans-serif;
+    font-size: 20px;
+}
+
+.highlight {
+    background-color: #FFEB3B;
+    border-radius: 5px;
+    padding: 2px 4px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    display: inline-block;
+}

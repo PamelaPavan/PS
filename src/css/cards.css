@@ -1,0 +1,31 @@
+/* cards.css */
+
+.card {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    background-color: transparent;
+    border: none;
+    margin-top: 30px;
+}
+
+.concluida {
+    color: #534c4c;
+    opacity: 0.6;
+}
+
+.linha-personalizada {
+    border: none;
+    border-top: 2px solid #FF85A1;
+    width: 80%;
+    margin: 0 auto;
+    margin-top: 30px;
+}
+
+.linha-personalizada2 {
+    border-top: 2px solid #FF85A1;
+    width: 40%;
+    margin: 0 auto;
+    margin-top: 10px;
+}

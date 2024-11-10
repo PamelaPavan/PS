@@ -1,0 +1,37 @@
+/* base.css */
+@font-face {
+    font-family: 'Joseph Sophia';
+    src: url('fonts/josephsophia/josephsophia.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'White Chocolate Mint';
+    src: url('White\ Chocolate\ Mint\ -\ OTF.otf') format('opentype');
+}
+
+/* Estilos gerais */
+body {
+    background-color: #FFCCBD;
+    font-family: 'Roboto', sans-serif;
+    padding: 20px;
+}
+
+.lined-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: repeating-linear-gradient(
+        to bottom,
+        transparent,
+        transparent 28px,
+        #FF85A1 28px,
+        #FF85A1 30px
+    );
+    z-index: -1;
+    opacity: 0.3;
+    pointer-events: none;
+}

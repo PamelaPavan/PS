@@ -1,0 +1,32 @@
+/* buttons.css */
+
+.btn-primary, .btn-danger {
+    background-color: #FC6998;
+    border-color: #FC6998;
+    width: 100%;
+}
+
+.btn-primary:hover, .btn-danger:hover, .btn-mover:hover {
+    background-color: #FF85A1;
+    border-color: #FF85A1;
+}
+
+.btn-secondary {
+    background-color: #6a6868;
+    border-color: #6a6868;
+    width: 100%;
+}
+
+.btn-container {
+    display: flex;
+    flex-direction: column;
+    margin-right: 10px;
+}
+
+.btn-mover.mover-cima:disabled,
+.btn-mover.mover-baixo:disabled {
+    background-color: rgba(252, 105, 152, 0.5);
+    border-color: rgba(252, 105, 152, 0.5);
+    color: #fff;
+    cursor: not-allowed;
+}
