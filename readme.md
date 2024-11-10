@@ -10,6 +10,8 @@
  
 - [Introdução](#introdução)
 - [Estrutura de pastas](#estrutura-de-pastas)
+- [Base de Dados](#base-de-dados)
+- [Arquitetura do Projeto](#arquitetura-do-projeto)
 - [Como Acessar](#como-acessar)
 - [Funcionalidades](#funcionalidades)
 - [Autor](#autor)
@@ -22,18 +24,37 @@ Este projeto é uma aplicação web interativa que oferece uma interface para ca
 
 ## Estrutura de Pastas
 ```
-project-root/
+project-root
+│
+├── src
+│   ├── config
+│   ├── css
+│   ├── img
+│   ├── routes   
+│   ├── scripts
+│   ├── views
+│   │
+│   └── .gitignore  # Arquivos e pastas a serem ignorados pelo Git
+│
+└── readme.md       # Documentação do projeto
 
-├── src/
-│   ├── css/
-│   ├── img/
-│   ├── scripts/
-│   ├── views/
-│   ├── .gitignore
-│   ├── app.js
-└── readme.md
 ```
 
+## Base de Dados
+
+### Tabela: Tarefas
+```
+| Campo                      | Tipo de Dados | Descrição                                                                 |
+|----------------------------|---------------|--------------------------------------------------------------------------|
+| Identificador da tarefa    | INT           | Chave primária, identificador único da tarefa                            |
+| Nome da tarefa             | VARCHAR       | Nome da tarefa                                                           |
+| Custo (R$)                 | DECIMAL       | Custo da tarefa em reais                                                 |
+| Data limite                | DATE          | Data limite para a conclusão da tarefa                                   |
+| Ordem de apresentação      | INT           | Campo numérico, não repetido, que servirá para ordenar os registros na tela |
+
+```
+
+## Arquitetura do Projeto
 
 ## Como Acessar
 Acesse: [Link - Lista de Tarefas](https://listatarefa-pamela-pavan.up.railway.app/)
